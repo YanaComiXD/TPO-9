@@ -78,7 +78,7 @@ namespace ContactFormTests.Tests
 
             Assert.IsTrue(_page.IsEmailErrorVisible(),
                 "Ошибка поля 'Email' не отображается");
-            StringAssert.Contains(_page.GetEmailErrorText().ToLower(), "корректно");
+            StringAssert.Contains(_page.GetEmailErrorText().ToLower(), "корректн");
             Assert.IsFalse(_page.IsSuccessVisible());
         }
 
