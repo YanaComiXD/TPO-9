@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Контактная форма</title>
+    <style>
+        body { font-family: Arial; max-width: 500px; margin: 40px auto; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
+        .error { color: red; font-size: 13px; margin-top: 4px; display: none; }
+        .error.visible { display: block; }
+        .alert-success {
+            display: none;
+            padding: 12px;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+        .alert-success.visible { display: block; }
+    </style>
+</head>
+<body>
+    <h1>Свяжитесь с нами</h1>
+
+    <form id="contactForm" novalidate>
+        <div class="form-group">
+            <label for="name">Имя *</label>
+            <input type="text" id="name" name="name" placeholder="Введите имя">
+            <div class="error error-name" id="errorName">Поле "Имя" обязательно для заполнения</div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="text" id="email" name="email" placeholder="example@mail.ru">
+            <div class="error error-email" id="errorEmail">Введите корректный email</div>
+        </div>
+
+        <div class="form-group">
+            <label for="subject">Тема</label>
+            <input type="text" id="subject" name="subject" placeholder="Тема обращения">
+        </div>
+
+        <div class="form-group">
+            <label for="message">Сообщение *</label>
+            <textarea id="message" name="message" rows="5" placeholder="Текст сообщения"></textarea>
+            <div class="error error-message" id="errorMessage">Поле "Сообщение" обязательно для заполнения</div>
+        </div>
+
+        <button type="submit" id="submitBtn">Отправить</button>
+
+        <div class="alert-success" id="successAlert">
+            Сообщение успешно отправлено!
+        </div>
+    </form>
+
+    <script>
+        const form = document.getElementById('contactForm');
+        const successAlert = document.getElementById('successAlert');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            let valid = true;
+
+            document.querySelectorAll('.error').forEach(el => el.classList.remove('visible'));
+            successAlert.classList.remove('visible');
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (name === '') {
+                document.getElementById('errorName').classList.add('visible');
+                valid = false;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('errorEmail').classList.add('visible');
+                valid = false;
+            }
+
+            if (message === '') {
+                document.getElementById('errorMessage').classList.add('visible');
+                valid = false;
+            }
+
+            if (valid) {
+                successAlert.classList.add('visible');
+                form.reset();
+            }
+        });
+    </script>
+</body>
+</html>
