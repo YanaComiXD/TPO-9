@@ -1,10 +1,16 @@
 ﻿using OpenQA.Selenium;
+using System.IO;
 
 namespace ContactFormTests.Pages
 {
     public class ContactPage : BasePage
     {
-        private const string Url = "http://localhost:8000/contact.html";
+        private string GetUrl()
+        {
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string filePath = Path.Combine(baseDir, "contact.html");
+            return "file:///" + filePath.Replace("\\", "/");
+        }
 
         private static readonly By NameInput = By.Id("name");
         private static readonly By EmailInput = By.Id("email");
@@ -21,7 +27,7 @@ namespace ContactFormTests.Pages
 
         public ContactPage OpenPage()
         {
-            Open(Url);
+            Open(GetUrl());
             return this;
         }
 
