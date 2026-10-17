@@ -16,9 +16,12 @@ namespace ContactFormTests.Tests
         public void Setup()
         {
             var options = new ChromeOptions();
-            _driver = new ChromeDriver(options);
+            options.AddArgument("--headless=new");
+            options.AddArgument("--window-size=1400,900");
+    
+            _driver = new ChromeDriver(options); 
+            _page = new ContactPage(_driver);
         }
-
         [TestCleanup]
         public void Teardown()
         {
