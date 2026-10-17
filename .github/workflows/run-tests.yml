@@ -1,0 +1,29 @@
+name: Run C# Tests
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  test:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore "ТПО 4.sln"
+
+    - name: Build
+      run: dotnet build "ТПО 4.sln" --no-restore
+
+    - name: Run tests
+      run: dotnet test "ТПО 4.sln" --no-build --verbosity normal
